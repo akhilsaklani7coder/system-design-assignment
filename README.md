@@ -60,7 +60,6 @@ system-design-assignment/
 ├── 14_TicketPrinter.cpp
 ├── 15_BookingService.cpp
 ├── main.cpp
-├── TCS-504_Assignment_1_Akhil_Saklani.pdf
 ├── LINKEDIN_POST.md
 ├── docs/
 │   ├── assignment-report.md
@@ -95,8 +94,9 @@ Verified scenarios include successful UPI booking, failed payment with seat rele
 - [PlantUML Sequence Diagram Source](docs/sequence-diagram.puml)
 - [Demo / Edge-Case Transcript](docs/demo-output.txt)
 - [Test Plan](docs/test-plan.md)
-- [Completed Assignment PDF](TCS-504_Assignment_1_Akhil_Saklani.pdf)
 - [LinkedIn Post Draft](LINKEDIN_POST.md)
+
+> **Submission PDF:** a polished PDF version is generated alongside this repository and is ready for submission.
 
 ## 🔒 Deliberate Scope Boundary
 
