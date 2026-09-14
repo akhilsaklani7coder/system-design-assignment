@@ -29,26 +29,16 @@ Build a small movie ticket booking system for a **single cinema** as a menu-driv
 
 ## 🧠 Design Highlights
 
-### OOP
-
 | Concept | Where it appears |
 |---|---|
-| Encapsulation | Private state in `Movie`, `Seat`, `ShowSeat`, `Booking`, etc. |
+| Encapsulation | Private state in domain classes |
 | Abstraction | Abstract `Payment` class |
 | Inheritance | `UpiPayment`, `CardPayment`, `CashPayment` |
 | Runtime polymorphism | `Payment&` dispatches to concrete `pay()` implementations |
 | Compile-time polymorphism | Overloaded `Movie` constructors |
 | Static member | `Booking::nextBookingId` |
 | Composition | `Cinema → Screen`, `Screen → Seat`, `Show → ShowSeat` |
-| Aggregation | `Show → Movie/Screen`, `Booking → ShowSeat` |
-
-### SOLID
-
-- **S — Single Responsibility:** pricing, ticket printing and booking orchestration are separated.
-- **O — Open/Closed:** new payment methods can extend `Payment` without changing existing payment classes.
-- **L — Liskov Substitution:** all concrete payment classes work through `Payment&`.
-- **I — Interface Segregation:** the payment contract contains only payment operations required by this scope.
-- **D — Dependency Inversion:** `BookingService` receives the `Payment` abstraction instead of constructing a concrete payment internally.
+| Aggregation | `Show → Movie`, `Booking → ShowSeat` |
 
 ## 📁 Project Structure
 
@@ -83,7 +73,7 @@ system-design-assignment/
 └── .github/workflows/build.yml
 ```
 
-The assignment requires **one class per file** and **no header files**. Therefore `main.cpp` is the single compilation entry point and includes the class implementation files in dependency order.
+The assignment requires **one class per file** and **no header files**. `main.cpp` includes the class implementation files in dependency order.
 
 ## ▶️ Build & Run
 
@@ -94,35 +84,9 @@ g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o movie_booking
 
 ## 🧪 Verification
 
-The implementation was compiled with warnings enabled and verified with successful booking, failed payment, already-booked seat rejection, cancellation, invalid seat handling, and invalid menu input.
+Verified scenarios include successful UPI booking, failed payment with seat release, already-booked seat rejection, cancellation with seat release, duplicate seat rejection, invalid seat handling and invalid menu input. A GitHub Actions build check is included.
 
-### Example successful transaction
-
-```text
-TOTAL: Rs.400.00
-UPI payment of Rs.400.00 initiated for akhil@upi.
-Enter UPI confirmation code (1234 = success): 1234
-Payment successful. Booking confirmed.
-
-================ TICKET ================
-Booking ID : BK1001
-Customer   : Akhil Saklani
-Movie      : 3 Idiots
-Screen     : Screen-1
-Time       : 06:00 PM
-Seats      : A1, B1
-Amount     : Rs.400.00
-Status     : CONFIRMED
-=========================================
-```
-
-### Failure-path invariant
-
-```text
-Payment failed. Booking NOT confirmed; seats remain AVAILABLE.
-```
-
-## 📐 UML Documentation
+## 📐 Documentation
 
 - [Assignment Report](docs/assignment-report.md)
 - [Class Diagram](docs/class-diagram.md)
@@ -136,7 +100,7 @@ Payment failed. Booking NOT confirmed; seats remain AVAILABLE.
 
 ## 🔒 Deliberate Scope Boundary
 
-This is an academic **single-cinema console application**, not a production distributed booking platform. Real payment gateways, databases, authentication, Redis, Kafka, distributed locks, microservices, and observability are intentionally excluded because they are outside the assignment's required scope.
+This is an academic **single-cinema console application**, not a production distributed booking platform. Real payment gateways, databases, authentication, Redis, Kafka, distributed locks, microservices and production observability are intentionally excluded because they are outside the required scope.
 
 ## 📚 Academic Context
 
