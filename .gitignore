@@ -1,0 +1,10 @@
+# Build output
+movie_booking
+*.exe
+*.out
+
+# IDE / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
