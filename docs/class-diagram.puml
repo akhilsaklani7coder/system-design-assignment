@@ -1,0 +1,36 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+class Movie { - title : string\n- language : string\n- durationMinutes : int\n+ Movie()\n+ Movie(title, language, durationMinutes)\n+ getTitle() : string\n+ getLanguage() : string\n+ getDurationMinutes() : int }
+class Seat { - number : string\n- type : SeatType\n+ Seat(number, type)\n+ getNumber() : string\n+ getType() : SeatType }
+class Screen { - screenNumber : int\n- seats : vector<Seat>\n+ Screen(screenNumber)\n+ buildSeats() : void\n+ getSeats() : vector<Seat> }
+class Cinema { - name : string\n- screens : vector<Screen>\n+ Cinema(name)\n+ addScreen(screenNumber) : void\n+ getScreens() : vector<Screen> }
+class Show { - showId : int\n- movie : Movie*\n- screen : Screen*\n- startTime : string\n- showSeats : vector<ShowSeat>\n+ Show(...)\n+ findSeat(number) : ShowSeat*\n+ printSeatLayout() : void }
+class ShowSeat { - seat : Seat*\n- status : SeatStatus\n+ ShowSeat(seat)\n+ bookSeat() : bool\n+ cancelSeat() : void\n+ isAvailable() : bool }
+class Customer { - name : string\n- phone : string\n+ Customer(name, phone)\n+ getName() : string\n+ getPhone() : string }
+class Booking { - {static} nextBookingId : int\n- bookingId : string\n- customer : Customer*\n- show : Show*\n- seats : vector<ShowSeat*>\n- bookingAmount : double\n- status : BookingStatus\n+ confirm() : void\n+ fail() : void\n+ cancel() : void }
+abstract class Payment { {abstract} + pay(amount) : bool\n{abstract} + methodName() : string }
+class UpiPayment { - upiId : string\n+ pay(amount) : bool }
+class CardPayment { - lastFourDigits : string\n+ pay(amount) : bool }
+class CashPayment { + pay(amount) : bool }
+class PriceCalculator { - SILVER_PRICE : double\n- GOLD_PRICE : double\n- PLATINUM_PRICE : double\n+ calculate(seats) : double }
+class TicketPrinter { + print(booking) : void }
+class BookingService { - priceCalculator : PriceCalculator\n- ticketPrinter : TicketPrinter\n- bookings : vector<Booking*>\n+ book(...) : Booking*\n+ cancel(id) : bool\n+ printTickets() : void }
+Cinema "1" *-- "1..*" Screen
+Screen "1" *-- "1..*" Seat
+Show "1" o-- "1" Movie
+Show "1" --> "1" Screen
+Show "1" *-- "1..*" ShowSeat
+ShowSeat "1" --> "1" Seat
+Booking "1" --> "1" Customer
+Booking "1" o-- "1..*" ShowSeat
+BookingService "1" o-- "0..*" Booking
+Payment <|-- UpiPayment
+Payment <|-- CardPayment
+Payment <|-- CashPayment
+BookingService ..> Payment
+BookingService ..> PriceCalculator
+BookingService ..> TicketPrinter
+BookingService ..> Booking
+@enduml
